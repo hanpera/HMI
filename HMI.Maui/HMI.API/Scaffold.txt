@@ -1,0 +1,1 @@
+Scaffold-DbContext -provider Microsoft.EntityFrameworkCore.Sqlite "DataSource=.\DB\HMI.db" -OutputDir DataModel -ContextDir Data  -context HMIContext -DataAnnotations -force
