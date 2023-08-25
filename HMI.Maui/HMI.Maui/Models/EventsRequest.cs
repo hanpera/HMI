@@ -9,14 +9,14 @@ namespace HMI.Maui.Models
     public class EventsRequest
     {
         public EventFilters Filters { get; set; } = new();
-        public Order? Order { get; set; }
+        public Order? Order { get; set; } = new();
         public Pager Pager { get; set; } = new();
 
         public void Clear()
         {
             Filters = new();
-            Order = null;
-            Pager = new();
+            Order = new Order();
+            Pager = new Pager();
         }
     }
 
@@ -30,8 +30,8 @@ namespace HMI.Maui.Models
 
     public class Order
     {
-        public string? Property { get; set; }
-        public string? Direction { get; set; }
+        public string? Property { get; set; } = "Date";
+        public string? Direction { get; set; } = "desc";
     }
 
     public class Pager

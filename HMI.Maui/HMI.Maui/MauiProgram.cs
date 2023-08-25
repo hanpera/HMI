@@ -1,6 +1,9 @@
-﻿using HMI.Maui.Services;
+using CommunityToolkit.Maui;
+using Syncfusion.Maui.Core.Hosting;
+using HMI.Maui.Services;
 using HMI.Maui.ViewModels;
 using Microsoft.Extensions.Logging;
+using CommunityToolkit.Maui.Storage;
 
 namespace HMI.Maui
 {
@@ -11,6 +14,8 @@ namespace HMI.Maui
             var builder = MauiApp.CreateBuilder();
             builder
                 .UseMauiApp<App>()
+            .ConfigureSyncfusionCore()
+                .UseMauiCommunityToolkit()
                 .ConfigureFonts(fonts =>
                 {
                     fonts.AddFont("OpenSans-Regular.ttf", "OpenSansRegular");
@@ -26,12 +31,10 @@ namespace HMI.Maui
                 options.BaseAddress = new Uri("http://localhost:5073/");
             });
 
-            //builder.Services.AddSingleton(sp => new HttpClient(){BaseAddress = new Uri("http://localhost:5073/") })
-            //builder.Services.AddScoped<EventsService>();
             builder.Services.AddScoped<EventsViewModel>();
 
             builder.Services.AddSingleton<MainPage>();
-
+            builder.Services.AddSingleton(FileSaver.Default);
             return builder.Build();
         }
     }

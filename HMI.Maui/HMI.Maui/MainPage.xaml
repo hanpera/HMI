@@ -1,79 +1,62 @@
 ﻿<?xml version="1.0" encoding="utf-8" ?>
 <ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+            xmlns:datagrid="clr-namespace:Syncfusion.Maui.DataGrid;assembly=Syncfusion.Maui.DataGrid"
              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
              x:Class="HMI.Maui.MainPage"
              xmlns:model ="clr-namespace:HMI.Maui.Models"
              xmlns:viewmodel ="clr-namespace:HMI.Maui.ViewModels"
              x:DataType ="viewmodel:EventsViewModel"
+         
              Title="{Binding Title}">
 
-   <Grid ColumnSpacing="1" RowSpacing="1" Padding="5">
-       <Grid.RowDefinitions>
-           <RowDefinition Height="auto"/>
-           <RowDefinition Height="auto"/>
-           <RowDefinition Height="auto"/>
-           <RowDefinition Height="auto"/>
-           <RowDefinition Height="*"/>
-       </Grid.RowDefinitions>
-       <Grid.ColumnDefinitions>
-           <ColumnDefinition Width="*" />
-       </Grid.ColumnDefinitions>
+    <Grid ColumnSpacing="1" RowSpacing="1" Padding="5">
+        <Grid.RowDefinitions>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="auto"/>
+            <RowDefinition Height="*"/>
+        </Grid.RowDefinitions>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="*" />
+        </Grid.ColumnDefinitions>
 
-       <VerticalStackLayout Padding="5" Grid.Row="0" Margin="9">
-           <Entry x:Name="User" Placeholder="User" Text="{Binding Request.Filters.User,FallbackValue=null}" />
-           <Entry x:Name="From" Placeholder="From" Text="{Binding Request.Filters.From, FallbackValue=null}"/>
-           <Entry x:Name="To" Placeholder="To" Text="{Binding Request.Filters.To, FallbackValue=null}"/>
-           <Entry x:Name="Alarm" Placeholder="Alarm" Text="{Binding Request.Filters.Allarm, FallbackValue=null}"/>
-       </VerticalStackLayout>
-        <VerticalStackLayout Grid.Row="1">
-            <Entry x:Name="PageIndex" Placeholder="Page Index" Text="{Binding Request.Pager.Page,FallbackValue=1}" />
-            <Entry x:Name="PageSize" Placeholder="Page Size" Text="{Binding Request.Pager.PageSize,FallbackValue=10}" />
-
+        <VerticalStackLayout Padding="5" Grid.Row="0" Margin="9">
+            <Entry x:Name="User" Placeholder="User" Text="{Binding Request.Filters.User,FallbackValue=null}" />
+            <Entry x:Name="From" Placeholder="From" Text="{Binding Request.Filters.From, FallbackValue=null}"/>
+            <Entry x:Name="To" Placeholder="To" Text="{Binding Request.Filters.To, FallbackValue=null}"/>
+            <Entry x:Name="Alarm" Placeholder="Alarm" Text="{Binding Request.Filters.Allarm, FallbackValue=null}"/>
         </VerticalStackLayout>
-       <Button Text="Load" Grid.Row="1" IsEnabled="{Binding IsNotLoading}"
+        <HorizontalStackLayout Grid.Row="1" >
+            <Label Text="Page Index" Margin="5" FontAttributes="Bold"></Label>
+            <Entry x:Name="PageIndex" Placeholder="Page Index" Text="{Binding Request.Pager.Page,FallbackValue=1}" />
+            <Label Text="Page Size" Margin="5" FontAttributes="Bold"></Label>
+            <Entry x:Name="PageSize" Placeholder="Page Size" Text="{Binding Request.Pager.PageSize,FallbackValue=10}" />
+        </HorizontalStackLayout>
+        <Button Text="Load" Grid.Row="2" IsEnabled="{Binding IsNotLoading}"
                Command="{Binding RefreshEventsCommand}" Margin="9" />
 
-       <Button Text="Clear Form" Command="{Binding ClearCommand}" IsEnabled="{Binding IsNotLoading}" 
-               Grid.Row="2" Margin="9"/>
+        <Button Text="Clear Form" Command="{Binding ClearCommand}" IsEnabled="{Binding IsNotLoading}" 
+               Grid.Row="3" Margin="9"/>
+
+        <HorizontalStackLayout Grid.Row="4" Margin="9">
+            <Button Text="Export PDF" Command="{Binding ExportPdfCommand}" CommandParameter="{x:Reference dataGrid}" IsEnabled="{Binding IsNotLoading}" 
+                     Margin="9"/>
+            <Button Text="Export Excel" Command="{Binding ExportExcelCommand}" CommandParameter="{x:Reference dataGrid}" IsEnabled="{Binding IsNotLoading}" 
+                    Margin="9"/>
+        </HorizontalStackLayout>
+
+        <!--<CollectionView Grid.Row="4" ItemsSource="{Binding Events}" SelectionMode="None"/>-->
+
+        <datagrid:SfDataGrid Grid.Row="5" x:Name="dataGrid" ItemsSource="{Binding Events}" SelectionMode="None" AllowEditing="False" AutoGenerateColumnsMode="None" >
+			<datagrid:SfDataGrid.Columns>
+				<datagrid:DataGridNumericColumn HeaderText="ID" MappingName="Id" Format="D" CellTextAlignment="End"/>
+				<datagrid:DataGridTextColumn HeaderText="Name" MappingName="UserName" Width="150"/>
+				<datagrid:DataGridTextColumn HeaderText="Surname" MappingName="UserSurname" Width="150"/>
+				<datagrid:DataGridDateColumn Format="dd/MM/yyyy HH:mm:ss" HeaderText="Date" MappingName="Date" SortMode="Default" Width="150"/>
+                <datagrid:DataGridTextColumn HeaderText="Alarms" MappingName="Allarms" Width="300"/>
+            </datagrid:SfDataGrid.Columns>
+        </datagrid:SfDataGrid>
     </Grid>
-
-    <!--<ScrollView>
-        <VerticalStackLayout
-            Spacing="25"
-            Padding="30,0"
-            VerticalOptions="Center">
-
-            <Image
-                Source="dotnet_bot.png"
-                SemanticProperties.Description="Cute dot net bot waving hi to you!"
-                HeightRequest="200"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Hello, World!"
-                SemanticProperties.HeadingLevel="Level1"
-                FontSize="32"
-                HorizontalOptions="Center" />
-
-            <Label
-                Text="Welcome to .NET Multi-platform App UI"
-                SemanticProperties.HeadingLevel="Level2"
-                SemanticProperties.Description="Welcome to dot net Multi platform App U I"
-                FontSize="18"
-                HorizontalOptions="Center" />
-
-            <Button
-                x:Name="CounterBtn"
-                Text="Click me"
-                SemanticProperties.Hint="Counts the number of times you click"
-                Clicked="OnCounterClicked"
-                HorizontalOptions="Center" />
-
-            <Button Text="Load" Grid.Row="1" IsEnabled="{Binding IsNotLoading}"
-                    Command="{Binding RefreshEventsCommand}" Margin="9" />
-
-
-        </VerticalStackLayout>
-    </ScrollView>-->
-
 </ContentPage>
