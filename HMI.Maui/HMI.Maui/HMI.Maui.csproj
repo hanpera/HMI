@@ -65,18 +65,4 @@
 	  <Folder Include="Views\" />
 	</ItemGroup>
 
-	<ItemGroup>
-	  <Compile Update="MainPage - Copy.xaml.cs">
-	    <SubType>Code</SubType>
-	    <DependentUpon>%(Filename)</DependentUpon>
-	  </Compile>
-	</ItemGroup>
-
-	<ItemGroup>
-	  <MauiXaml Update="MainPage - Copy.xaml">
-	    <SubType>Designer</SubType>
-	    <Generator>MSBuild:Compile</Generator>
-	  </MauiXaml>
-	</ItemGroup>
-
 </Project>
