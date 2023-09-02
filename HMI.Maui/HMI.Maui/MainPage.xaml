@@ -6,7 +6,6 @@
              xmlns:model ="clr-namespace:HMI.Maui.Models"
              xmlns:viewmodel ="clr-namespace:HMI.Maui.ViewModels"
              x:DataType ="viewmodel:EventsViewModel"
-         
              Title="{Binding Title}">
 
     <Grid ColumnSpacing="1" RowSpacing="1" Padding="5">
@@ -49,13 +48,13 @@
 
         <!--<CollectionView Grid.Row="4" ItemsSource="{Binding Events}" SelectionMode="None"/>-->
 
-        <datagrid:SfDataGrid Grid.Row="5" x:Name="dataGrid" ItemsSource="{Binding Events}" SelectionMode="None" AllowEditing="False" AutoGenerateColumnsMode="None" >
-			<datagrid:SfDataGrid.Columns>
+        <datagrid:SfDataGrid Grid.Row="5" x:Name="dataGrid"  BackgroundColor="{AppThemeBinding Dark=White }" ItemsSource="{Binding Events}" SelectionMode="None" AllowEditing="False" AutoGenerateColumnsMode="None" >
+            <datagrid:SfDataGrid.Columns>
 				<datagrid:DataGridNumericColumn HeaderText="ID" MappingName="Id" Format="D" CellTextAlignment="End"/>
 				<datagrid:DataGridTextColumn HeaderText="Name" MappingName="UserName" Width="150"/>
 				<datagrid:DataGridTextColumn HeaderText="Surname" MappingName="UserSurname" Width="150"/>
 				<datagrid:DataGridDateColumn Format="dd/MM/yyyy HH:mm:ss" HeaderText="Date" MappingName="Date" SortMode="Default" Width="200"/>
-                <datagrid:DataGridTextColumn HeaderText="Alarms" MappingName="Allarms" Width="300"/>
+                <datagrid:DataGridTextColumn HeaderText="Alarms" MappingName="Allarms"  ColumnWidthMode="Fill"/>
             </datagrid:SfDataGrid.Columns>
         </datagrid:SfDataGrid>
     </Grid>
